@@ -7,7 +7,12 @@ import {
   CardContent,
   Typography,
 } from '@mui/material';
-import { IOpenWeatherData, fetchOpenWeatherData } from '../../utils/api';
+import {
+  IOpenWeatherData,
+  OpenWeatherTempScale,
+  fetchOpenWeatherData,
+} from '../../utils/api';
+import { ILocalStorageOptions } from '../../utils/storage';
 
 const WeatherCardContainer: React.FC<{
   children: any;
@@ -31,21 +36,22 @@ const WeatherCardContainer: React.FC<{
 
 type WeatherCardState = 'loading' | 'error' | 'ready';
 
-const WeatherCard: React.FC<{ city: string; onDelete?: () => void }> = ({
-  city,
-  onDelete,
-}) => {
+const WeatherCard: React.FC<{
+  city: string;
+  onDelete?: () => void;
+  tempScale: OpenWeatherTempScale;
+}> = ({ city, onDelete, tempScale }) => {
   const [weatherData, setWeatherData] = useState<IOpenWeatherData | null>(null);
   const [cardState, setCardState] = useState<WeatherCardState>('loading');
 
   useEffect(() => {
-    fetchOpenWeatherData(city)
+    fetchOpenWeatherData(city, tempScale)
       .then((data) => {
         setWeatherData(data);
         setCardState('ready');
       })
       .catch((err) => setCardState('error'));
-  }, [city]);
+  }, [city, tempScale]);
 
   if (cardState === 'loading' || cardState === 'error') {
     return (
