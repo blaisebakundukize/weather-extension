@@ -6,6 +6,7 @@ export interface ILocalStorage {
 }
 
 export interface ILocalStorageOptions {
+  homeCity: string;
   tempScale: OpenWeatherTempScale;
 }
 
