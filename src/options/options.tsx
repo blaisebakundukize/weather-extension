@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
   Button,
+  Switch,
 } from '@mui/material';
 import '@fontsource/roboto/400.css';
 import './options.css';
@@ -31,6 +32,13 @@ const App: React.FC<{}> = () => {
     setOptions({
       ...options,
       homeCity,
+    });
+  };
+
+  const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+    setOptions({
+      ...options,
+      hasAutoOverlay,
     });
   };
 
@@ -66,6 +74,17 @@ const App: React.FC<{}> = () => {
                 onChange={(event) => handleHomeCityChange(event.target.value)}
                 disabled={isFieldsDisabled}
               />
+            </Grid>
+            <Grid item>
+              <Typography variant='body1'>
+                Auto toggle overlay on webpage load
+              </Typography>
+              <Switch
+                color='primary'
+                checked={options.hasAutoOverlay}
+                onChange={(event, checked) => handleAutoOverlayChange(checked)}
+                disabled={isFieldsDisabled}
+              ></Switch>
             </Grid>
             <Grid item>
               <Button
